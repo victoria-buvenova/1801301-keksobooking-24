@@ -57,28 +57,26 @@ function getRandomCoord(min, max) {
 function getAuthor() {
   const randomNumber = getRandomIntInclusive(1, 10);
   const imgAuthor = randomNumber !== 10 ? `0${randomNumber}` : randomNumber;
-  const author = {
+  return {
     avatar: `img/avatars/user${imgAuthor}.png`,
   };
-  return author;
 }
 
 /**
  * @returns объект location
  */
 function getLocation() {
-  const location = {
+  return {
     lat: getRandomCoord(LAT_MIN, LAT_MAX),
     lng: getRandomCoord(LNG_MIN, LNG_MAX),
   };
-  return location;
 }
 
 /**
  * @returns объект offer
  */
 function getOffer() {
-  const offer = {
+  return {
     title: 'Apartments for rent',
     address: `${getLocation().lat}, ${getLocation().lng}`,
     price: getRandomPositive(),
@@ -91,7 +89,6 @@ function getOffer() {
     description: 'Best house',
     photos: new Array(getRandomPositive()).fill(null).map(() => getRandomArrayElement(photos)),
   };
-  return offer;
 }
 
 /**
@@ -103,12 +100,11 @@ function createAdvertisement() {
   const offer = getOffer();
   const location = getLocation();
 
-  const advertisement = {
+  return {
     author: author,
     offer: offer,
     location: location,
   };
-  return advertisement;
 }
 
 const objectGenerator = new Array(10).fill(null).map(createAdvertisement);
