@@ -1,19 +1,21 @@
-// Функция, возвращающая случайное целое число из переданного диапазона включительно.
-function getRandomIntInclusive(min, max) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  if (max <= min) {
-    throw 'Ошибка: максимальное значение не может быть меньше или равно минимальному';
-  }
-  return Math.floor(Math.random() * (max - min + 1)) + min;
+import {getAuthor, getLocation, getOffer} from './data.js';
+
+/**
+ *
+ * @returns объект advertisement, содержащий объекты author, offer and location
+ */
+function createAdvertisement() {
+  const author = getAuthor();
+  const offer = getOffer();
+  const location = getLocation();
+
+  return {
+    author: author,
+    offer: offer,
+    location: location,
+  };
 }
-getRandomIntInclusive();
-// Функция, возвращающая случайное число с
-// плавающей точкой из переданного диапазона включительно
-function getRandomFloat(min, max) {
-  if (max <= min) {
-    throw 'error: max cannot be less than min';
-  }
-  return Math.random() * (max - min) + min;
-}
-getRandomFloat();
+
+const objectGenerator = new Array(10).fill(null).map(createAdvertisement);
+
+objectGenerator;
