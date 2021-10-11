@@ -9,6 +9,8 @@ const photos = [
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/brandon-hoogenboom-SNxQGWxZQi0.jpg',
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg',
 ];
+const descriptions = ['Best house', 'Cosy flat', 'Comfortable palace', 'Best price on the market', 'Real Japan'];
+const titles = ['Apartment for rent', 'House for rent', 'Palace for rent'];
 
 const LAT_MIN = 35.65000;
 const LAT_MAX = 35.70000;
@@ -42,7 +44,7 @@ function getLocation() {
  */
 function getOffer() {
   return {
-    title: 'Apartments for rent',
+    title: getRandomArrayElement(titles),
     address: `${getLocation().lat}, ${getLocation().lng}`,
     price: getRandomPositive(),
     type: getRandomArrayElement(accommodationTypes),
@@ -51,7 +53,7 @@ function getOffer() {
     checkin: getRandomArrayElement(checkins),
     checkout: getRandomArrayElement(checkouts),
     features: features,
-    description: 'Best house',
+    description: getRandomArrayElement(descriptions),
     photos: new Array(getRandomPositive()).fill(null).map(() => getRandomArrayElement(photos)),
   };
 }
