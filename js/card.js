@@ -127,6 +127,5 @@ AUTHOR.avatar ? POPUP_AVATAR.src = AUTHOR.avatar : hideElement(POPUP_AVATAR);
 //Отрисуйте один из сгенерированных DOM-элементов,
 // например первый, в блок #map-canvas, чтобы проверить,
 // что данные в разметку были вставлены корректно.
-MAP_CANVAS.appendChild(POPUP_TITLE);
-
+MAP_CANVAS.appendChild(POPUP);
 
