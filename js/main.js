@@ -1,4 +1,5 @@
 import {getAuthor, getLocation, getOffer} from './data.js';
+import './card.js';
 
 /**
  *
