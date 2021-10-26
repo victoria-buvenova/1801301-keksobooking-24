@@ -1,10 +1,15 @@
 const userForm = document.querySelector('.ad-form');
 const accommodationTypeInputElement = userForm.querySelector('#type');
 const priceInputElement = userForm.querySelector('#price');
-const ONE_ROOM = '1';
-const TWO_ROOMS = '2';
-const THREE_ROOMS = '3';
-const HUNDRED_ROOMS = '100';
+const checkInInput = document.querySelector('#timein');
+const checkOutInput = document.querySelector('#timeout');
+
+const ROOMS = {
+  one: '1',
+  two: '2',
+  three: '3',
+  hundred: '100',
+};
 
 const PRICE = {
   min: 0,
@@ -59,26 +64,38 @@ const capacityOption = capacitySelect.querySelectorAll('option');
 const roomNumberSelect = document.querySelector('#room_number');
 
 roomNumberSelect.addEventListener('change', () => {
-  if (roomNumberSelect.value === HUNDRED_ROOMS) {
+  if (roomNumberSelect.value === ROOMS.hundred) {
     capacityOption[3].disabled = false;
     capacityOption[3].selected = true;
     capacityOption[0].disabled = true;
     capacityOption[1].disabled = true;
     capacityOption[2].disabled = true;
-  } else if (roomNumberSelect.value === ONE_ROOM) {
+  } else if (roomNumberSelect.value === ROOMS.one) {
     capacityOption[0].disabled = true;
     capacityOption[2].selected = true;
     capacityOption[1].disabled = true;
-    capacityOption[2].disabled= false;
+    capacityOption[2].disabled = false;
     capacityOption[3].disabled = true;
-  } else if (roomNumberSelect.value === TWO_ROOMS) {
+  } else if (roomNumberSelect.value === ROOMS.two) {
     capacityOption[0].disabled = true;
     capacityOption[1].disabled = false;
-    capacityOption[2].disabled= false;
-  } else if (roomNumberSelect.value === THREE_ROOMS) {
+    capacityOption[1].selected = true;
+    capacityOption[2].disabled = false;
+    capacityOption[3].disabled = true;
+  } else if (roomNumberSelect.value === ROOMS.three) {
     capacityOption[0].disabled = false;
+    capacityOption[0].selected = true;
     capacityOption[1].disabled = false;
-    capacityOption[2].disabled= false;
+    capacityOption[2].disabled = false;
     capacityOption[3].disabled = true;
   }
 });
+
+/**
+ * сопоставляет время въезда/выезда
+ */
+const matchTime = () => {
+  checkOutInput.value = checkInInput.value;
+};
+
+checkInInput.addEventListener('change', matchTime);
