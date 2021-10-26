@@ -99,3 +99,35 @@ const matchTime = () => {
 };
 
 checkInInput.addEventListener('change', matchTime);
+
+const adForm = document.querySelector('.ad-form');
+const adFormElements = document.querySelectorAll('.ad-form__element');
+const mapFiltersForm = document.querySelector('.map__filters');
+const mapFiltersFormElements = document.querySelectorAll('.map__filter');
+
+/**
+ * функция переключает форму в активное или неактивное состояние
+ * @param {*} activeState булево значение, отвечающее за активное/неактивное состояние
+ */
+const toggleFormState = (activeState) => {
+  if (activeState) {
+    adForm.classList.remove('ad-form--disabled');
+    mapFiltersForm.classList.remove('map__filters--disabled');
+    adFormElements.forEach((formElement) => {
+      formElement.removeAttribute('disabled');
+    });
+    mapFiltersFormElements.forEach((filterElement) => {
+      filterElement.removeAttribute('disabled');
+    });
+  } else {
+    adForm.classList.add('ad-form--disabled');
+    mapFiltersForm.classList.add('map__filters--disabled');
+    adFormElements.forEach((formElement) => {
+      formElement.setAttribute('disabled', 'disabled');
+    });
+    mapFiltersFormElements.forEach((filterElement) => {
+      filterElement.setAttribute('disabled', 'disabled');
+    });
+  }
+};
+toggleFormState(true);
