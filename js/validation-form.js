@@ -94,8 +94,8 @@ roomNumberSelect.addEventListener('change', () => {
 /**
  * сопоставляет время въезда/выезда
  */
-function matchTime() {
+const matchTime = () => {
   checkOutInput.value = checkInInput.value;
-}
+};
 
 checkInInput.addEventListener('change', matchTime);
