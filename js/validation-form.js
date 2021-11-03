@@ -130,4 +130,5 @@ const toggleFormState = (activeState) => {
     });
   }
 };
-toggleFormState(true);
+
+export {toggleFormState};
