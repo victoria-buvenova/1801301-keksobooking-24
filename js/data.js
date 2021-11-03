@@ -24,9 +24,25 @@ function getAuthor() {
  */
 function getLocation() {
   return {
-    lat: getRandomCoord(LAT_MIN, LAT_MAX),
-    lng: getRandomCoord(LNG_MIN, LNG_MAX),
+    lat: getRandomCoord(LAT_MIN, LAT_MAX).toFixed(5),
+    lng: getRandomCoord(LNG_MIN, LNG_MAX).toFixed(5),
   };
+}
+
+/**
+ * создает рандомное количество удобств
+ * @returns массив удобств
+ */
+function getFeatures () {
+  const featuresResult = [];
+  const featuresNumber = getRandomIntInclusive (1, features.length);
+  for (let i = 0; i < featuresNumber; i++) {
+    const newFeature = features[i];
+    if (!featuresResult.includes(newFeature)) {
+      featuresResult[i] = newFeature;
+    }
+  }
+  return featuresResult;
 }
 
 /**
@@ -42,9 +58,29 @@ function getOffer() {
     guests: getRandomPositive(),
     checkin: getRandomArrayElement(checkins),
     checkout: getRandomArrayElement(checkouts),
-    features: features,
+    features: getFeatures(),
     description: getRandomArrayElement(descriptions),
     photos: new Array(getRandomPositive()).fill(null).map(() => getRandomArrayElement(photos)),
   };
 }
-export {getAuthor, getLocation, getOffer};
+
+/**
+ *
+ * @returns объект advertisement, содержащий объекты author, offer and location
+ */
+function createAdvertisement() {
+  const author = getAuthor();
+  const offer = getOffer();
+  const location = getLocation();
+
+  return {
+    author: author,
+    offer: offer,
+    location: location,
+  };
+}
+
+const advetismentGenerator = new Array(10).fill(null).map(createAdvertisement);
+
+
+export {getAuthor, getLocation, getOffer, advetismentGenerator};

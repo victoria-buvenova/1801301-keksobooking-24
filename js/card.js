@@ -1,6 +1,3 @@
-import { getAuthor, getOffer } from './data.js';
-
-
 const DISPLAYED_TYPE = {
   flat: 'Квартира',
   bungalow: 'Бунгало',
@@ -9,8 +6,6 @@ const DISPLAYED_TYPE = {
   hotel: 'Отель',
 };
 
-const OFFER = getOffer();
-const AUTHOR = getAuthor();
 
 /**
  * скрывает элемент, добавляя класс hidden
@@ -88,44 +83,52 @@ function makePopupFeatures(popupElement, features) {
 
 }
 
-const MAP_CANVAS = document.querySelector('#map-canvas');
+/**
+ * функция, создающая попап(карточку)
+ * @param {} offer
+ * @param {*} author
+ * @returns возвращает попап с данными
+ */
+const createPopup = (offer, author) => {
 
-const CARD_TEMPLATE = document.querySelector('#card').content;
-const POPUP = CARD_TEMPLATE.querySelector('.popup').cloneNode(true);
+  const CARD_TEMPLATE = document.querySelector('#card').content;
+  const POPUP = CARD_TEMPLATE.querySelector('.popup').cloneNode(true);
 
-const POPUP_TITLE = POPUP.querySelector('.popup__title');
-const POPUP_ADDRESS = POPUP.querySelector('.popup__text--address');
-const POPUP_PRICE = POPUP.querySelector('.popup__text--price');
-const POPUP_TYPE = POPUP.querySelector('.popup__type');
-const POPUP_CAPACITY = POPUP.querySelector('.popup__text--capacity');
-const POPUP_TIME = POPUP.querySelector('.popup__text--time');
-const POPUP_FEATURES = POPUP.querySelector('.popup__features');
-const POPUP_DESCRIPTION = POPUP.querySelector('.popup__description');
-const POPUP_PHOTOS = POPUP.querySelector('.popup__photos');
-const POPUP_AVATAR = POPUP.querySelector('.popup__avatar');
+  const POPUP_TITLE = POPUP.querySelector('.popup__title');
+  const POPUP_ADDRESS = POPUP.querySelector('.popup__text--address');
+  const POPUP_PRICE = POPUP.querySelector('.popup__text--price');
+  const POPUP_TYPE = POPUP.querySelector('.popup__type');
+  const POPUP_CAPACITY = POPUP.querySelector('.popup__text--capacity');
+  const POPUP_TIME = POPUP.querySelector('.popup__text--time');
+  const POPUP_FEATURES = POPUP.querySelector('.popup__features');
+  const POPUP_DESCRIPTION = POPUP.querySelector('.popup__description');
+  const POPUP_PHOTOS = POPUP.querySelector('.popup__photos');
+  const POPUP_AVATAR = POPUP.querySelector('.popup__avatar');
 
-OFFER.title ? addText(POPUP_TITLE, OFFER.title) : hideElement(POPUP_TITLE);
+  offer.title ? addText(POPUP_TITLE, offer.title) : hideElement(POPUP_TITLE);
 
-OFFER.address ? addText(POPUP_ADDRESS, OFFER.address) : hideElement(POPUP_ADDRESS);
+  hideElement(POPUP_ADDRESS);
 
-OFFER.price ? addText(POPUP_PRICE, `${OFFER.price} ₽/ночь`) : hideElement(POPUP_PRICE);
+  offer.price ? addText(POPUP_PRICE, `${offer.price} ₽/ночь`) : hideElement(POPUP_PRICE);
 
-OFFER.type ? addText(POPUP_TYPE, DISPLAYED_TYPE[OFFER.type]) : hideElement(POPUP_TYPE);
+  offer.type ? addText(POPUP_TYPE, DISPLAYED_TYPE[offer.type]) : hideElement(POPUP_TYPE);
 
-(OFFER.rooms && OFFER.guests) ? addText(POPUP_CAPACITY, handleCapacity(OFFER.guests, OFFER.rooms)) : hideElement(POPUP_CAPACITY);
+  (offer.rooms && offer.guests) ? addText(POPUP_CAPACITY, handleCapacity(offer.guests, offer.rooms)) : hideElement(POPUP_CAPACITY);
 
-(OFFER.checkin && OFFER.checkout) ? addText(POPUP_TIME, `Заезд после ${OFFER.checkin}, выезд до ${OFFER.checkout}`) : hideElement(POPUP_TIME);
+  (offer.checkin && offer.checkout) ? addText(POPUP_TIME, `Заезд после ${offer.checkin}, выезд до ${offer.checkout}`) : hideElement(POPUP_TIME);
 
-OFFER.features.length > 0 ? makePopupFeatures(POPUP_FEATURES, OFFER.features) : hideElement(POPUP_FEATURES);
+  offer.features.length > 0 ? makePopupFeatures(POPUP_FEATURES, offer.features) : hideElement(POPUP_FEATURES);
 
-OFFER.description ? addText(POPUP_DESCRIPTION, OFFER.description) : hideElement(POPUP_DESCRIPTION);
+  offer.description ? addText(POPUP_DESCRIPTION, offer.description) : hideElement(POPUP_DESCRIPTION);
 
-OFFER.photos.length > 0 ? makePopupPhotos(POPUP_PHOTOS, OFFER.photos) : hideElement(POPUP_PHOTOS);
+  offer.photos.length > 0 ? makePopupPhotos(POPUP_PHOTOS, offer.photos) : hideElement(POPUP_PHOTOS);
 
-AUTHOR.avatar ? POPUP_AVATAR.src = AUTHOR.avatar : hideElement(POPUP_AVATAR);
+  author.avatar ? POPUP_AVATAR.src = author.avatar : hideElement(POPUP_AVATAR);
 
-//Отрисуйте один из сгенерированных DOM-элементов,
-// например первый, в блок #map-canvas, чтобы проверить,
-// что данные в разметку были вставлены корректно.
-MAP_CANVAS.appendChild(POPUP);
+  return POPUP;
+
+};
+
+
+export {createPopup};
 
