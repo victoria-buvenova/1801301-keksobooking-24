@@ -1,6 +1,6 @@
 import {createPopup} from './card.js';
-import {advetismentGenerator} from './data.js';
 import {toggleFormState} from './validation-form.js';
+import {fetchAds} from './fetch.js';
 
 const INITIAL_MAP_COORD = {
   lat: 35.65000,
@@ -66,24 +66,31 @@ mainPinMarker.on('moveend', (evt) => {
   ADDRESS_INPUT.value = `${mainPinCoord.lat.toFixed(5)}, ${mainPinCoord.lng.toFixed(5)}`;
 });
 
-advetismentGenerator.forEach((listedProperty) => {
-  const icon = L.icon({
-    iconUrl: 'https://assets.htmlacademy.ru/content/intensive/javascript-1/demo/interactive-map/pin.svg',
-    iconSize: PIN_ICON_SIZE,
-    iconAnchor: PIN_ANCHOR,
+
+const showAds = (adsArray) => {
+  adsArray.forEach((listedProperty) => {
+    const icon = L.icon({
+      iconUrl: 'https://assets.htmlacademy.ru/content/intensive/javascript-1/demo/interactive-map/pin.svg',
+      iconSize: PIN_ICON_SIZE,
+      iconAnchor: PIN_ANCHOR,
+    });
+
+    const marker = L.marker(
+      {
+        lat: listedProperty.location.lat,
+        lng: listedProperty.location.lng,
+      },
+      {
+        icon,
+      },
+    );
+
+    marker
+      .addTo(map)
+      .bindPopup(createPopup(listedProperty.offer, listedProperty.author));
   });
+};
 
-  const marker = L.marker(
-    {
-      lat: listedProperty.location.lat,
-      lng: listedProperty.location.lng,
-    },
-    {
-      icon,
-    },
-  );
+const loadAds = fetchAds(showAds, console.error);
 
-  marker
-    .addTo(map)
-    .bindPopup(createPopup(listedProperty.offer, listedProperty.author));
-});
+loadAds();
