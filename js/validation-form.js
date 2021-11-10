@@ -1,8 +1,21 @@
+import { postAd } from './fetch.js';
+import { resetMap } from './map.js';
+
 const userForm = document.querySelector('.ad-form');
 const accommodationTypeInputElement = userForm.querySelector('#type');
 const priceInputElement = userForm.querySelector('#price');
 const checkInInput = document.querySelector('#timein');
 const checkOutInput = document.querySelector('#timeout');
+const formResetBtn = userForm.querySelector('.ad-form__reset');
+const formSubmitBtn = userForm.querySelector('.ad-form__submit');
+
+const body = document.querySelector('body');
+
+const successTemplate = document.querySelector('#success').content;
+const sucessMsg = successTemplate.querySelector('.success').cloneNode(true);
+
+const errorTemplate = document.querySelector('#error').content;
+const errorMsg = errorTemplate.querySelector('.error').cloneNode(true);
 
 const ROOMS = {
   one: '1',
@@ -99,36 +112,102 @@ const matchTime = () => {
 };
 
 checkInInput.addEventListener('change', matchTime);
-
 const adForm = document.querySelector('.ad-form');
-const adFormElements = document.querySelectorAll('.ad-form__element');
 const mapFiltersForm = document.querySelector('.map__filters');
-const mapFiltersFormElements = document.querySelectorAll('.map__filter');
 
-/**
- * функция переключает форму в активное или неактивное состояние
- * @param {*} activeState булево значение, отвечающее за активное/неактивное состояние
- */
-const toggleFormState = (activeState) => {
-  if (activeState) {
-    adForm.classList.remove('ad-form--disabled');
-    mapFiltersForm.classList.remove('map__filters--disabled');
-    adFormElements.forEach((formElement) => {
-      formElement.removeAttribute('disabled');
-    });
-    mapFiltersFormElements.forEach((filterElement) => {
-      filterElement.removeAttribute('disabled');
-    });
-  } else {
-    adForm.classList.add('ad-form--disabled');
-    mapFiltersForm.classList.add('map__filters--disabled');
-    adFormElements.forEach((formElement) => {
-      formElement.setAttribute('disabled', 'disabled');
-    });
-    mapFiltersFormElements.forEach((filterElement) => {
-      filterElement.setAttribute('disabled', 'disabled');
-    });
-  }
+
+const onFormSubmit = (onSuccess, onFail) => {
+  adForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+    postAd (
+      new FormData(evt.target),
+      onSuccess,
+      onFail,
+    );
+  });
 };
 
-export {toggleFormState};
+/**
+ * Функция сбрасывающая ВСЁ в исходное(пустое) состояние
+ */
+const resetForm  = () => {
+  mapFiltersForm.reset();
+  userForm.reset();
+  resetMap();
+};
+
+const ESC = 'Esc';
+const ESCAPE = 'Escape';
+
+/**
+ * Функция вызываемая в случае успешного POST запроса
+ * чистит поля формы
+ * показывает Success Message overlay
+ * при нажатии Esc(Escape) удаляются Success Message overlay и EventListener'ы
+ */
+const onFormSuccess = () => {
+  resetForm();
+  body.appendChild(sucessMsg);
+
+  const onCloseSuccess = (evt) => {
+    if (evt.key === ESC || evt.key === ESCAPE) {
+      body.removeChild(sucessMsg);
+      document.removeEventListener('keydown', onCloseSuccess);
+    }
+  };
+
+  sucessMsg.addEventListener('click', () => {
+    body.removeChild(sucessMsg);
+    document.removeEventListener('keydown', onCloseSuccess);
+  });
+
+  document.addEventListener('keydown', onCloseSuccess);
+};
+
+/**
+ * Функция вызываемая в случае НЕуспешного POST запроса
+ * показывает Error Message overlay
+ * при нажатии Esc(Escape) или кнопки "Попробуйте снова", удаляются Error Message overlay и EventListener'ы
+ */
+const onFormFail = () => {
+  document.querySelector('body').appendChild(errorMsg);
+
+  const onCloseError = (evt) => {
+    if (evt.key === ESC || evt.key === ESCAPE) {
+      body.removeChild(errorMsg);
+      document.removeEventListener('keydown', onCloseError);
+    }
+  };
+
+  errorMsg.addEventListener('click', () => {
+    body.removeChild(errorMsg);
+    document.removeEventListener('keydown', onCloseError);
+  });
+
+  document.addEventListener('keydown', onCloseError);
+
+  const errorButton = errorTemplate.querySelector('.error__button');
+  errorButton.addEventListener('click', () => {
+    body.removeChild(errorMsg);
+    document.removeEventListener('keydown', onCloseError);
+  });
+};
+
+//Возврат формы в исходное состояние
+formResetBtn.addEventListener('click', (evt) => {
+  evt.preventDefault();
+  resetForm();
+});
+
+//Отправка формы
+formSubmitBtn.addEventListener('submit', (evt) => {
+  evt.preventDefault();
+  postAd (
+    new FormData(evt.target),
+    onFormSuccess,
+    onFormFail,
+  );
+});
+
+
+onFormSubmit(onFormSuccess, onFormFail);
