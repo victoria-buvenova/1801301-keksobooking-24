@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг»
 
 * Студент: [Victoria](https://up.htmlacademy.ru/javascript/24/user/1801301).
-* Наставник: `Mikhail Kisly`.
+* Наставник: `Maxim Volkov`.
 
 ---
 

@@ -117,11 +117,11 @@ const createPopup = (offer, author) => {
 
   (offer.checkin && offer.checkout) ? addText(POPUP_TIME, `Заезд после ${offer.checkin}, выезд до ${offer.checkout}`) : hideElement(POPUP_TIME);
 
-  offer.features.length > 0 ? makePopupFeatures(POPUP_FEATURES, offer.features) : hideElement(POPUP_FEATURES);
+  (offer.features &&  offer.features.length > 0) ? makePopupFeatures(POPUP_FEATURES, offer.features) : hideElement(POPUP_FEATURES);
 
   offer.description ? addText(POPUP_DESCRIPTION, offer.description) : hideElement(POPUP_DESCRIPTION);
 
-  offer.photos.length > 0 ? makePopupPhotos(POPUP_PHOTOS, offer.photos) : hideElement(POPUP_PHOTOS);
+  (offer.photos && offer.photos.length > 0) ? makePopupPhotos(POPUP_PHOTOS, offer.photos) : hideElement(POPUP_PHOTOS);
 
   author.avatar ? POPUP_AVATAR.src = author.avatar : hideElement(POPUP_AVATAR);
 
