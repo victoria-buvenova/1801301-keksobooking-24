@@ -5,7 +5,6 @@ const BASE_URL = 'https://24.javascript.pages.academy/keksobooking';
  * @param {функция} onSuccess функция вызывающаяся в случае успешного получения данных
  * @param {функция} onError функция, вызыващаяся в случае ошибки
  */
-// удалить параметры
 const fetchAds = (onSuccess, onError) => () => {
   fetch(
     `${BASE_URL}/data`,
@@ -21,7 +20,6 @@ const fetchAds = (onSuccess, onError) => () => {
 
       throw new Error(`${response.status} ${response.statusText}`);
     })
-    // вернуть промис
     .then((data) => {
       onSuccess(data);
     })
@@ -29,7 +27,6 @@ const fetchAds = (onSuccess, onError) => () => {
       onError(err);
     });
 };
-// колбэки и промисы не смешивать
 
 /**
  * Отправка данных на сервер
