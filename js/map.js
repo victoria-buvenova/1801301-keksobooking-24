@@ -22,9 +22,9 @@ const BASE_URL = 'https://assets.htmlacademy.ru/content/intensive/javascript-1/d
 const ICON_URL = `${BASE_URL}/pin.svg`;
 const MAIN_PIN_ICON_URL = `${BASE_URL}/main-pin.svg`;
 
-const ADDRESS_INPUT = document.querySelector('#address');
-ADDRESS_INPUT.readOnly = true;
-ADDRESS_INPUT.value = `${MAIN_PIN_COORD.lat}, ${MAIN_PIN_COORD.lng}`;
+const addressInput = document.querySelector('#address');
+addressInput.readOnly = true;
+addressInput.value = `${MAIN_PIN_COORD.lat}, ${MAIN_PIN_COORD.lng}`;
 
 // перевод страницы в неактивное состояние
 disabledPage(document);
@@ -69,7 +69,7 @@ mainPinMarker.addTo(map);
 // отображает координаты главной метки в поле ввода после того как метка была передвинута
 mainPinMarker.on('moveend', (evt) => {
   const mainPinCoord = evt.target.getLatLng();
-  ADDRESS_INPUT.value = `${mainPinCoord.lat.toFixed(5)}, ${mainPinCoord.lng.toFixed(5)}`;
+  addressInput.value = `${mainPinCoord.lat.toFixed(5)}, ${mainPinCoord.lng.toFixed(5)}`;
 });
 
 const markerGroup = L.layerGroup().addTo(map);
@@ -145,7 +145,7 @@ const resetMap = () => {
     lat: MAIN_PIN_COORD.lat,
     lng: MAIN_PIN_COORD.lng,
   });
-  ADDRESS_INPUT.value = `${MAIN_PIN_COORD.lat}, ${MAIN_PIN_COORD.lng}`;
+  addressInput.value = `${MAIN_PIN_COORD.lat}, ${MAIN_PIN_COORD.lng}`;
 };
 
 loadAds();

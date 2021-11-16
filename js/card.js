@@ -1,4 +1,4 @@
-const DISPLAYED_TYPE = {
+const DisplayedType = {
   flat: 'Квартира',
   bungalow: 'Бунгало',
   house: 'Дом' ,
@@ -111,7 +111,7 @@ const createPopup = (offer, author) => {
 
   offer.price ? addText(popupPrice, `${offer.price} ₽/ночь`) : hideElement(popupPrice);
 
-  offer.type ? addText(popupType, DISPLAYED_TYPE[offer.type]) : hideElement(popupType);
+  offer.type ? addText(popupType, DisplayedType[offer.type]) : hideElement(popupType);
 
   (offer.rooms && offer.guests) ? addText(popupCapacity, handleCapacity(offer.guests, offer.rooms)) : hideElement(popupCapacity);
 
