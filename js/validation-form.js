@@ -1,6 +1,9 @@
 import { postAd } from './fetch.js';
 import { resetMap } from './map.js';
 
+const ESC = 'Esc';
+const ESCAPE = 'Escape';
+
 const userForm = document.querySelector('.ad-form');
 const accommodationTypeInputElement = userForm.querySelector('#type');
 const priceInputElement = userForm.querySelector('#price');
@@ -17,14 +20,14 @@ const sucessMsg = successTemplate.querySelector('.success').cloneNode(true);
 const errorTemplate = document.querySelector('#error').content;
 const errorMsg = errorTemplate.querySelector('.error').cloneNode(true);
 
-const ROOMS = {
+const Rooms = {
   one: '1',
   two: '2',
   three: '3',
   hundred: '100',
 };
 
-const PRICE = {
+const Price = {
   min: 0,
   bungalow: 0,
   flat: 1000,
@@ -41,21 +44,21 @@ function getMinPrice(accommodationType) {
   let minPrice;
   switch (accommodationType) {
     case 'bungalow':
-      minPrice = PRICE.bungalow;
+      minPrice = Price.bungalow;
       break;
     case 'flat':
-      minPrice = PRICE.flat;
+      minPrice = Price.flat;
       break;
     case 'hotel':
-      minPrice = PRICE.hotel;
+      minPrice = Price.hotel;
       break;
     case 'house':
-      minPrice = PRICE.house;
+      minPrice = Price.house;
       break;
     case 'palace':
-      minPrice = PRICE.palace;
+      minPrice = Price.palace;
       break;
-    default: minPrice = PRICE.min;
+    default: minPrice = Price.min;
   }
   return minPrice;
 }
@@ -77,25 +80,25 @@ const capacityOption = capacitySelect.querySelectorAll('option');
 const roomNumberSelect = document.querySelector('#room_number');
 
 roomNumberSelect.addEventListener('change', () => {
-  if (roomNumberSelect.value === ROOMS.hundred) {
+  if (roomNumberSelect.value === Rooms.hundred) {
     capacityOption[3].disabled = false;
     capacityOption[3].selected = true;
     capacityOption[0].disabled = true;
     capacityOption[1].disabled = true;
     capacityOption[2].disabled = true;
-  } else if (roomNumberSelect.value === ROOMS.one) {
+  } else if (roomNumberSelect.value === Rooms.one) {
     capacityOption[0].disabled = true;
     capacityOption[2].selected = true;
     capacityOption[1].disabled = true;
     capacityOption[2].disabled = false;
     capacityOption[3].disabled = true;
-  } else if (roomNumberSelect.value === ROOMS.two) {
+  } else if (roomNumberSelect.value === Rooms.two) {
     capacityOption[0].disabled = true;
     capacityOption[1].disabled = false;
     capacityOption[1].selected = true;
     capacityOption[2].disabled = false;
     capacityOption[3].disabled = true;
-  } else if (roomNumberSelect.value === ROOMS.three) {
+  } else if (roomNumberSelect.value === Rooms.three) {
     capacityOption[0].disabled = false;
     capacityOption[0].selected = true;
     capacityOption[1].disabled = false;
@@ -135,9 +138,6 @@ const resetForm  = () => {
   userForm.reset();
   resetMap();
 };
-
-const ESC = 'Esc';
-const ESCAPE = 'Escape';
 
 /**
  * Функция вызываемая в случае успешного POST запроса

@@ -1,4 +1,4 @@
-const DISPLAYED_TYPE = {
+const DisplayedType = {
   flat: 'Квартира',
   bungalow: 'Бунгало',
   house: 'Дом' ,
@@ -91,41 +91,41 @@ function makePopupFeatures(popupElement, features) {
  */
 const createPopup = (offer, author) => {
 
-  const CARD_TEMPLATE = document.querySelector('#card').content;
-  const POPUP = CARD_TEMPLATE.querySelector('.popup').cloneNode(true);
+  const cardTemplate = document.querySelector('#card').content;
+  const popup = cardTemplate.querySelector('.popup').cloneNode(true);
 
-  const POPUP_TITLE = POPUP.querySelector('.popup__title');
-  const POPUP_ADDRESS = POPUP.querySelector('.popup__text--address');
-  const POPUP_PRICE = POPUP.querySelector('.popup__text--price');
-  const POPUP_TYPE = POPUP.querySelector('.popup__type');
-  const POPUP_CAPACITY = POPUP.querySelector('.popup__text--capacity');
-  const POPUP_TIME = POPUP.querySelector('.popup__text--time');
-  const POPUP_FEATURES = POPUP.querySelector('.popup__features');
-  const POPUP_DESCRIPTION = POPUP.querySelector('.popup__description');
-  const POPUP_PHOTOS = POPUP.querySelector('.popup__photos');
-  const POPUP_AVATAR = POPUP.querySelector('.popup__avatar');
+  const popupTitle = popup.querySelector('.popup__title');
+  const popupAddress = popup.querySelector('.popup__text--address');
+  const popupPrice = popup.querySelector('.popup__text--price');
+  const popupType = popup.querySelector('.popup__type');
+  const popupCapacity = popup.querySelector('.popup__text--capacity');
+  const popupTime = popup.querySelector('.popup__text--time');
+  const popupFeatures = popup.querySelector('.popup__features');
+  const popupDescription = popup.querySelector('.popup__description');
+  const popupPhotos = popup.querySelector('.popup__photos');
+  const popupAvatar = popup.querySelector('.popup__avatar');
 
-  offer.title ? addText(POPUP_TITLE, offer.title) : hideElement(POPUP_TITLE);
+  offer.title ? addText(popupTitle, offer.title) : hideElement(popupTitle);
 
-  hideElement(POPUP_ADDRESS);
+  hideElement(popupAddress);
 
-  offer.price ? addText(POPUP_PRICE, `${offer.price} ₽/ночь`) : hideElement(POPUP_PRICE);
+  offer.price ? addText(popupPrice, `${offer.price} ₽/ночь`) : hideElement(popupPrice);
 
-  offer.type ? addText(POPUP_TYPE, DISPLAYED_TYPE[offer.type]) : hideElement(POPUP_TYPE);
+  offer.type ? addText(popupType, DisplayedType[offer.type]) : hideElement(popupType);
 
-  (offer.rooms && offer.guests) ? addText(POPUP_CAPACITY, handleCapacity(offer.guests, offer.rooms)) : hideElement(POPUP_CAPACITY);
+  (offer.rooms && offer.guests) ? addText(popupCapacity, handleCapacity(offer.guests, offer.rooms)) : hideElement(popupCapacity);
 
-  (offer.checkin && offer.checkout) ? addText(POPUP_TIME, `Заезд после ${offer.checkin}, выезд до ${offer.checkout}`) : hideElement(POPUP_TIME);
+  (offer.checkin && offer.checkout) ? addText(popupTime, `Заезд после ${offer.checkin}, выезд до ${offer.checkout}`) : hideElement(popupTime);
 
-  (offer.features &&  offer.features.length > 0) ? makePopupFeatures(POPUP_FEATURES, offer.features) : hideElement(POPUP_FEATURES);
+  (Array.isArray(offer.features) &&  offer.features.length > 0) ? makePopupFeatures(popupFeatures, offer.features) : hideElement(popupFeatures);
 
-  offer.description ? addText(POPUP_DESCRIPTION, offer.description) : hideElement(POPUP_DESCRIPTION);
+  offer.description ? addText(popupDescription, offer.description) : hideElement(popupDescription);
 
-  (offer.photos && offer.photos.length > 0) ? makePopupPhotos(POPUP_PHOTOS, offer.photos) : hideElement(POPUP_PHOTOS);
+  (Array.isArray(offer.photos) && offer.photos.length > 0) ? makePopupPhotos(popupPhotos, offer.photos) : hideElement(popupPhotos);
 
-  author.avatar ? POPUP_AVATAR.src = author.avatar : hideElement(POPUP_AVATAR);
+  author.avatar ? popupAvatar.src = author.avatar : hideElement(popupAvatar);
 
-  return POPUP;
+  return popup;
 
 };
 
