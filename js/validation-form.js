@@ -69,7 +69,8 @@ function getMinPrice(accommodationType) {
  */
 const calculateRoomsCapacity = () => {
   const price = getMinPrice(accommodationTypeInputElement.value);
-  priceInputElement.value = price;
+  priceInputElement.placeholder = price;
+  priceInputElement.min = price;
 };
 
 accommodationTypeInputElement.addEventListener('change', calculateRoomsCapacity);
