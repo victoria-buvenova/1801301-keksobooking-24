@@ -108,14 +108,16 @@ roomNumberSelect.addEventListener('change', () => {
   }
 });
 
-/**
- * сопоставляет время въезда/выезда
- */
-const matchTime = () => {
-  checkOutInput.value = checkInInput.value;
-};
+// синхронизирует поля время заезда и время выезда
 
-checkInInput.addEventListener('change', matchTime);
+checkInInput.addEventListener('change', (evt) => {
+  checkOutInput.value = evt.target.value;
+});
+
+checkOutInput.addEventListener('change', (evt) => {
+  checkInInput.value = evt.target.value;
+});
+
 const adForm = document.querySelector('.ad-form');
 const mapFiltersForm = document.querySelector('.map__filters');
 

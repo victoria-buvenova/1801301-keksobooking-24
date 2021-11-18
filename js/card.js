@@ -11,22 +11,22 @@ const DisplayedType = {
  * скрывает элемент, добавляя класс hidden
  * @param {*} element элемент, который нужно скрыть
  */
-function hideElement(element) {
+const hideElement = (element) => {
   if (element) {
     element.classList.add('hidden');
   }
-}
+};
 
 /**
  * добавляет необх-й текст в свойство textContent элемента
  * @param {*} element элемент, текст в котором нужно поменять/добавить
  * @param {*} displayedText текст, используемый для замены/добавления
  */
-function addText(element, displayedText) {
+const addText = (element, displayedText) => {
   if (element && displayedText) {
     element.textContent = displayedText;
   }
-}
+};
 
 /**
  * отображает правильные окончания
@@ -34,7 +34,7 @@ function addText(element, displayedText) {
  * @param {*} roomNumber число комнат
  * @returns строку с правильнымы окончаниями для гостей и комнат
  */
-function handleCapacity(guestNumber, roomNumber) {
+const handleCapacity = (guestNumber, roomNumber) => {
   let displayedGuest = 'гостей';
   let displayedRoom = 'комнат';
 
@@ -50,13 +50,14 @@ function handleCapacity(guestNumber, roomNumber) {
     displayedRoom = 'комнаты';
   }
   return `${roomNumber} ${displayedRoom} для ${guestNumber} ${displayedGuest}`;
-}
+};
+
 /**
  * отображает массивы фотографий
  * @param {*} popupElement элемент, в котором отображаем фото
  * @param {*} photos массив фото для отображений
  */
-function makePopupPhotos(popupElement, photos) {
+const makePopupPhotos = (popupElement, photos) => {
   const popupPhoto = popupElement.querySelector('.popup__photo');
   const popupPhotoClone = popupPhoto.cloneNode(true);
   popupPhoto.remove();
@@ -66,22 +67,21 @@ function makePopupPhotos(popupElement, photos) {
     photo.src = photoSrc;
     popupElement.appendChild(photo);
   });
-}
+};
 
 /**
  * отображает список features
  * @param {*} popupElement элемент, в котором отображаем features
  * @param {*} features массив features для отображений
  */
-function makePopupFeatures(popupElement, features) {
+const makePopupFeatures = (popupElement, features) => {
   popupElement.innerHTML='';
   features.forEach((feature) => {
     const newFeature = document.createElement('li');
     newFeature.classList.add('popup__feature', `popup__feature--${feature}`);
     popupElement.appendChild(newFeature);
   });
-
-}
+};
 
 /**
  * функция, создающая попап(карточку)

@@ -1,6 +1,6 @@
 import {createPopup} from './card.js';
 import {fetchAds} from './fetch.js';
-import {disabledPage, enabledPage} from './form-state.js';
+import {disablePage, enablePage} from './form-state.js';
 import { attachFiltersChangeHandler, createFilterFunction } from './utils/filters.js';
 
 
@@ -27,12 +27,12 @@ addressInput.readOnly = true;
 addressInput.value = `${MAIN_PIN_COORD.lat}, ${MAIN_PIN_COORD.lng}`;
 
 // перевод страницы в неактивное состояние
-disabledPage(document);
+disablePage(document);
 
 const map = L.map('map-canvas')
   .on('load', () => {
   // перевод страницы в активное состояние после инициализации формы
-    enabledPage(document);
+    enablePage(document);
   })
   .setView({
     lat: INITIAL_MAP_COORD.lat,

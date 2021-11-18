@@ -14,8 +14,8 @@ const setFormState = (form, state) => {
 };
 
 
-const disabledPage = (document) => [...document.forms].forEach((form) => setFormState(form, settings.disabled));
+const disablePage = (document) => [...document.forms].forEach((form) => setFormState(form, settings.disabled));
 
-const enabledPage = (document) => [...document.forms].forEach((form) => setFormState(form, settings.active));
+const enablePage = (document) => [...document.forms].forEach((form) => setFormState(form, settings.active));
 
-export {disabledPage, enabledPage};
+export {disablePage, enablePage};
