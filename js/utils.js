@@ -29,6 +29,9 @@ const getRandomArrayElement = (array) => array[getRandomIntInclusive(0, array.le
  * @param конечное значение координаты max
  * @returns значение с плавающей точкой в заданном диапазоне
  */
+
 const getRandomCoord = (min, max) => Math.random() * (max - min) + min;
+
+export const formatAddress = ({lat,lng}) => `${lat.toFixed(5)}, ${lng.toFixed(5)}`;
 
 export {getRandomPositive, getRandomIntInclusive, getRandomArrayElement, getRandomCoord};

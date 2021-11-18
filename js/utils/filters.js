@@ -1,23 +1,17 @@
+import { PriceRanges, MAX_MARKER_COUNT } from '../settings.js';
+
 const mapFiltersForm = document.querySelector('.map__filters');
 
-const LOW_LIMIT = 10000;
-const HIGH_LIMIT = 50000;
 
 const EMPTY_VALUE = 'any';
 
-const priceRanges = {
-  low: (element) => element.offer.price < LOW_LIMIT,
-  middle: (element) => element.offer.price >= LOW_LIMIT && element.offer.price < HIGH_LIMIT,
-  high: (element) => element.offer.price >= HIGH_LIMIT,
-};
 
-const applyPriceRangeRule = (element, priceRange) => !(priceRange in priceRanges) || priceRanges[priceRange](element);
+const applyPriceRangeRule = (element, priceRange) => !(priceRange in PriceRanges) || PriceRanges[priceRange](element);
 
 const applyFeaturesRule = (element, features) => {
   if (!Array.isArray(features) || features.length <= 0) {
     return true; //пользователь не выбрал никаких фич в фильтре - значит забираем с собой
   }
-
   const {
     features: elementFeatures,
   } = element.offer;
@@ -30,7 +24,7 @@ const applyFeaturesRule = (element, features) => {
   });
 };
 
-const applyAccomodationTypesRule = (element, type) => {
+const applyAccommodationTypesRule = (element, type) => {
   if (type === EMPTY_VALUE) {
     return true;
   }
@@ -59,10 +53,10 @@ const getFiltered = (dataArr, priceRange, features, type, roomsValue, guestsValu
     .filter((element) =>
       applyPriceRangeRule(element, priceRange) &&
       applyFeaturesRule(element, features) &&
-      applyAccomodationTypesRule(element, type) &&
+      applyAccommodationTypesRule(element, type) &&
       applyRoomsRule(element, roomsValue) &&
       applyGuestsRule(element, guestsValue))
-    .slice(0, 10);
+    .slice(0, MAX_MARKER_COUNT);
 };
 const isChecked = (a) => a.checked;
 const getValue = (b) => b.value;
