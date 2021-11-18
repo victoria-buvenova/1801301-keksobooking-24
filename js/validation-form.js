@@ -3,6 +3,7 @@ import { resetMap } from './map.js';
 
 const ESC = 'Esc';
 const ESCAPE = 'Escape';
+const PRICE_PLACEHOLDER = '1000';
 
 const userForm = document.querySelector('.ad-form');
 const accommodationTypeInputElement = userForm.querySelector('#type');
@@ -139,6 +140,8 @@ const onFormSubmit = (onSuccess, onFail) => {
 const resetForm  = () => {
   mapFiltersForm.reset();
   userForm.reset();
+  priceInputElement.placeholder = PRICE_PLACEHOLDER;
+  priceInputElement.min = Price.flat;
   resetMap();
 };
 
