@@ -23,7 +23,8 @@ const syncSelectValue = (primary, secondary)=>{
 
 const syncRoomsCapacity = ()=>{
   const guests = RoomsCapacity[roomNumberSelect.value];
-  [...capacitySelect.options].forEach((option)=>option.disabled = guests.some((capacity)=>capacity === option.value));
+  [...capacitySelect.options].forEach((option)=>option.disabled = guests.every((capacity)=>capacity !== option.value));
+  capacitySelect.setCustomValidity(isCapacityValied()?'':'capacity is invalid');
 };
 
 const syncTypePrice = ()=>{
@@ -32,9 +33,15 @@ const syncTypePrice = ()=>{
   priceInputElement.min = min;
 };
 
+const isCapacityValied = ()=>{
+  const enabled = [...capacitySelect.options].map(e=>({disabled:e.disabled, value:e.value})).find((e)=>e.value === capacitySelect.value && e.disabled === false)
+  return typeof enabled !== "undefined";
+}
+
 const initFormSubmit = (onSuccess, onFail) => {
   adForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
+   
     postAd (
       new FormData(evt.target),
       onSuccess,
@@ -43,7 +50,7 @@ const initFormSubmit = (onSuccess, onFail) => {
   });
 };
 
-const handleClonedMessage = (clonedElement)=>{
+const handleClonedMessage = (clonedElement, onClose=()=>undefined)=>{
   body.appendChild(clonedElement);
   let handleEsc = null;
   let handleX = null;
@@ -51,6 +58,7 @@ const handleClonedMessage = (clonedElement)=>{
     body.removeChild(clonedElement);
     document.removeEventListener('keydown', handleEsc);
     clonedElement.removeEventListener('click', handleX);
+    onClose();
   };
   handleEsc = (evt) => {
     if (evt.key === ESC || evt.key === ESCAPE) {
@@ -65,7 +73,7 @@ const handleClonedMessage = (clonedElement)=>{
   document.addEventListener('keydown', handleEsc);
 };
 const onFormSuccess = () => {
-  handleClonedMessage(successTemplate.querySelector('.success').cloneNode(true));
+  handleClonedMessage(successTemplate.querySelector('.success').cloneNode(true),enableAdForm);
 };
 
 const onFormFail = () => {
@@ -80,15 +88,18 @@ const initFormReset = ()=>{
 const initCheckInCheckOut = ()=>{
   checkInInput.addEventListener('change',()=>syncSelectValue(checkInInput, checkOutInput));
   checkOutInput.addEventListener('change',()=>syncSelectValue(checkOutInput, checkInInput));
+  syncSelectValue(checkInInput, checkOutInput);
 };
 
 
 const initRooms = ()=>{
   roomNumberSelect.addEventListener('change',syncRoomsCapacity);
+  syncRoomsCapacity();
 };
 
 const initType = ()=>{
   typeSelect.addEventListener('change', syncTypePrice);
+  syncTypePrice();
 };
 
 export const initAdForm = ()=>{
