@@ -1,3 +1,7 @@
+import{resetForm} from './reset-form.js';
+import { addressInput } from './selectors.js';
+import { MAIN_PIN_COORD } from './settings.js';
+
 const settings = {
   active: {
     method: 'remove',
@@ -16,6 +20,11 @@ const setFormState = (form, state) => {
 
 const disablePage = (document) => [...document.forms].forEach((form) => setFormState(form, settings.disabled));
 
-const enablePage = (document) => [...document.forms].forEach((form) => setFormState(form, settings.active));
+const enablePage = (document) => {
+  [...document.forms].forEach((form) => setFormState(form, settings.active));
+  resetForm();
+  addressInput.readOnly = true;
+  addressInput.value = `${MAIN_PIN_COORD.lat}, ${MAIN_PIN_COORD.lng}`;
+};
 
 export {disablePage, enablePage};

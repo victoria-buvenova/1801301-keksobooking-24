@@ -1,41 +1,28 @@
 import { postAd } from './fetch.js';
-import { resetMap } from './map.js';
+import { Price, Rooms } from './settings.js';
+import {
+  userForm,
+  successTemplate,
+  errorTemplate,
+  capacitySelect,
+  roomNumberSelect,
+  checkInInput,
+  checkOutInput,
+  adForm,
+  body,
+  priceInputElement
+} from './selectors.js';
+import { resetForm} from './reset-form.js';
 
 const ESC = 'Esc';
 const ESCAPE = 'Escape';
-const PRICE_PLACEHOLDER = '1000';
 
-const userForm = document.querySelector('.ad-form');
 const accommodationTypeInputElement = userForm.querySelector('#type');
-const priceInputElement = userForm.querySelector('#price');
-const checkInInput = document.querySelector('#timein');
-const checkOutInput = document.querySelector('#timeout');
 const formResetBtn = userForm.querySelector('.ad-form__reset');
 const formSubmitBtn = userForm.querySelector('.ad-form__submit');
-
-const body = document.querySelector('body');
-
-const successTemplate = document.querySelector('#success').content;
 const sucessMsg = successTemplate.querySelector('.success').cloneNode(true);
-
-const errorTemplate = document.querySelector('#error').content;
 const errorMsg = errorTemplate.querySelector('.error').cloneNode(true);
 
-const Rooms = {
-  one: '1',
-  two: '2',
-  three: '3',
-  hundred: '100',
-};
-
-const Price = {
-  min: 0,
-  bungalow: 0,
-  flat: 1000,
-  hotel: 3000,
-  house: 5000,
-  palace: 10000,
-};
 /**
  * показывает минимальную цену в зависимости от типа жилья
  * @param {*} accommodationType тип жилья
@@ -76,10 +63,7 @@ const calculateRoomsCapacity = () => {
 
 accommodationTypeInputElement.addEventListener('change', calculateRoomsCapacity);
 
-const capacitySelect = document.querySelector('#capacity');
 const capacityOption = capacitySelect.querySelectorAll('option');
-
-const roomNumberSelect = document.querySelector('#room_number');
 
 roomNumberSelect.addEventListener('change', () => {
   if (roomNumberSelect.value === Rooms.hundred) {
@@ -119,10 +103,6 @@ checkOutInput.addEventListener('change', (evt) => {
   checkInInput.value = evt.target.value;
 });
 
-const adForm = document.querySelector('.ad-form');
-const mapFiltersForm = document.querySelector('.map__filters');
-
-
 const onFormSubmit = (onSuccess, onFail) => {
   adForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
@@ -132,17 +112,6 @@ const onFormSubmit = (onSuccess, onFail) => {
       onFail,
     );
   });
-};
-
-/**
- * Функция сбрасывающая ВСЁ в исходное(пустое) состояние
- */
-const resetForm  = () => {
-  mapFiltersForm.reset();
-  userForm.reset();
-  priceInputElement.placeholder = PRICE_PLACEHOLDER;
-  priceInputElement.min = Price.flat;
-  resetMap();
 };
 
 /**
@@ -217,3 +186,5 @@ formSubmitBtn.addEventListener('submit', (evt) => {
 
 
 onFormSubmit(onFormSuccess, onFormFail);
+
+
