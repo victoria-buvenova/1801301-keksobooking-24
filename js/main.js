@@ -31,7 +31,6 @@ const startApp = async () => {
     syncFilter();
   } catch (err) {
     degradeFilter();
-    window.console.log(err);
   }
 };
 
