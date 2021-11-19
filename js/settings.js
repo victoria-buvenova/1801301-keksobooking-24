@@ -45,3 +45,5 @@ export const RoomsCapacity = {
 };
 
 export const MAX_MARKER_COUNT = 10;
+
+export const NO_DATA_TO_FILTER = 'nothing to filter';

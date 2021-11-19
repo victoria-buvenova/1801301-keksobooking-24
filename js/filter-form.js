@@ -1,5 +1,7 @@
 import { createFilterFunction } from './utils/filters.js';
 import {mapFiltersForm} from './selectors.js';
+import { NO_DATA_TO_FILTER } from './settings.js';
+import {debounce} from './utils/debounce.js';
 
 let _buffer = null;
 let _putMarkers = null;
@@ -20,6 +22,8 @@ export const syncFilter = ()=>{
   _putMarkers(_filterFunc(data));
 };
 
+const debounceSyncFilter = debounce(syncFilter,500);
+
 export const initFilterForm = (buffer, putMarkers)=>{
   if(_buffer !== null){
     return;
@@ -33,6 +37,13 @@ export const initFilterForm = (buffer, putMarkers)=>{
   _buffer = buffer;
   _putMarkers = putMarkers;
   _filterFunc = createFilterFunction(mapFiltersForm);
-  mapFiltersForm.addEventListener('change',syncFilter);
-  mapFiltersForm.querySelector('.map__features',syncFilter);
+  mapFiltersForm.addEventListener('change',debounceSyncFilter);
+  mapFiltersForm.querySelector('.map__features',debounceSyncFilter);
+};
+
+export const degradeFilter = ()=>{
+  const div = document.createElement('div');
+  div.className = 'map-filter__no-data';
+  div.innerText = NO_DATA_TO_FILTER;
+  mapFiltersForm.parentElement.appendChild(div);
 };

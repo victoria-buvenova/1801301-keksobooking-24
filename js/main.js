@@ -14,6 +14,7 @@ import {
   initAdForm
 } from './validation-form.js';
 import {
+  degradeFilter,
   initFilterForm,
   syncFilter
 } from './filter-form.js';
@@ -29,6 +30,7 @@ const startApp = async () => {
     enableFilterForm();
     syncFilter();
   } catch (err) {
+    degradeFilter();
     window.console.log(err);
   }
 };
