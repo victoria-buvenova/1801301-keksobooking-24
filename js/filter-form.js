@@ -3,29 +3,29 @@ import {mapFiltersForm} from './selectors.js';
 import { NO_DATA_TO_FILTER } from './settings.js';
 import {debounce} from './utils/debounce.js';
 
-let _buffer = null;
-let _putMarkers = null;
+let bufferRef = null;
+let putMarkersRef = null;
 
-let _filterFunc = null;
+let filterFuncRef = null;
 
 export const syncFilter = ()=>{
-  if(_buffer === null){
+  if(bufferRef === null){
     return;
   }
-  if(typeof _putMarkers !== 'function'){
+  if(typeof putMarkersRef !== 'function'){
     return;
   }
-  const {data} = _buffer;
+  const {data} = bufferRef;
   if(!Array.isArray(data)){
     throw new Error();
   }
-  _putMarkers(_filterFunc(data));
+  putMarkersRef(filterFuncRef(data));
 };
 
 const debounceSyncFilter = debounce(syncFilter,500);
 
 export const initFilterForm = (buffer, putMarkers)=>{
-  if(_buffer !== null){
+  if(bufferRef !== null){
     return;
   }
   if(typeof buffer !== 'object' || buffer === null){
@@ -34,9 +34,9 @@ export const initFilterForm = (buffer, putMarkers)=>{
   if(typeof putMarkers !== 'function'){
     throw new Error();
   }
-  _buffer = buffer;
-  _putMarkers = putMarkers;
-  _filterFunc = createFilterFunction(mapFiltersForm);
+  bufferRef = buffer;
+  putMarkersRef = putMarkers;
+  filterFuncRef = createFilterFunction(mapFiltersForm);
   mapFiltersForm.addEventListener('change',debounceSyncFilter);
   mapFiltersForm.querySelector('.map__features',debounceSyncFilter);
 };
