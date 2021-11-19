@@ -1,11 +1,4 @@
-const DisplayedType = {
-  flat: 'Квартира',
-  bungalow: 'Бунгало',
-  house: 'Дом' ,
-  palace: 'Дворец',
-  hotel: 'Отель',
-};
-
+import {DisplayedType} from './settings.js';
 
 /**
  * скрывает элемент, добавляя класс hidden
