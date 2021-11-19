@@ -1,4 +1,3 @@
-import { mapFiltersForm } from '../selectors.js';
 import { PriceRanges, MAX_MARKER_COUNT } from '../settings.js';
 
 const EMPTY_VALUE = 'any';
