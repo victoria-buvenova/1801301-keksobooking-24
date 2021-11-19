@@ -56,3 +56,10 @@ export const DisplayedType = {
   hotel: 'Отель',
 };
 
+
+export const LAT_MIN = 35.65000;
+export const LAT_MAX = 35.70000;
+export const LNG_MIN = 139.70000;
+export const LNG_MAX = 139.80000;
+
+
