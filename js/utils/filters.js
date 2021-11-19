@@ -1,23 +1,14 @@
-const mapFiltersForm = document.querySelector('.map__filters');
-
-const LOW_LIMIT = 10000;
-const HIGH_LIMIT = 50000;
+import { PriceRanges, MAX_MARKER_COUNT } from '../settings.js';
 
 const EMPTY_VALUE = 'any';
 
-const priceRanges = {
-  low: (element) => element.offer.price < LOW_LIMIT,
-  middle: (element) => element.offer.price >= LOW_LIMIT && element.offer.price < HIGH_LIMIT,
-  high: (element) => element.offer.price >= HIGH_LIMIT,
-};
 
-const priceRangeRule = (element, priceRange) => !(priceRange in priceRanges) || priceRanges[priceRange](element);
+const applyPriceRangeRule = (element, priceRange) => !(priceRange in PriceRanges) || PriceRanges[priceRange](element);
 
-const featuresRule = (element, features) => {
+const applyFeaturesRule = (element, features) => {
   if (!Array.isArray(features) || features.length <= 0) {
     return true; //пользователь не выбрал никаких фич в фильтре - значит забираем с собой
   }
-
   const {
     features: elementFeatures,
   } = element.offer;
@@ -30,26 +21,25 @@ const featuresRule = (element, features) => {
   });
 };
 
-const accomodationTypesRule = (element, type) => {
+const applyAccommodationTypesRule = (element, type) => {
   if (type === EMPTY_VALUE) {
     return true;
   }
   return type === element.offer.type;
 };
 
-const roomsRule = (element, roomsValue) => {
+const applyRoomsRule = (element, roomsValue) => {
   if (roomsValue !== EMPTY_VALUE) {
     return element.offer.rooms === Number(roomsValue);
-  } else {
-    return true;
   }
+  return true;
 };
-const guestsRule = (element, guestsValue) => {
+
+const applyGuestsRule = (element, guestsValue) => {
   if (guestsValue !== EMPTY_VALUE) {
     return element.offer.guests === Number(guestsValue);
-  } else {
-    return true;
   }
+  return true;
 };
 
 const getFiltered = (dataArr, priceRange, features, type, roomsValue, guestsValue) => {
@@ -58,12 +48,12 @@ const getFiltered = (dataArr, priceRange, features, type, roomsValue, guestsValu
   }
   return dataArr
     .filter((element) =>
-      priceRangeRule(element, priceRange) &&
-      featuresRule(element, features) &&
-      accomodationTypesRule(element, type) &&
-      roomsRule(element, roomsValue) &&
-      guestsRule(element, guestsValue))
-    .slice(0, 10);
+      applyPriceRangeRule(element, priceRange) &&
+      applyFeaturesRule(element, features) &&
+      applyAccommodationTypesRule(element, type) &&
+      applyRoomsRule(element, roomsValue) &&
+      applyGuestsRule(element, guestsValue))
+    .slice(0, MAX_MARKER_COUNT);
 };
 const isChecked = (a) => a.checked;
 const getValue = (b) => b.value;
@@ -83,17 +73,7 @@ const createFilterFunction = (form) => {
     filterGuestsInput.value);
 };
 
-const attachFiltersChangeHandler = (form, callback) => {
-  form.addEventListener('change', callback);
-};
-
-const resetFilter = () => {
-  mapFiltersForm.reset();
-};
-
 export {
-  createFilterFunction,
-  attachFiltersChangeHandler,
-  resetFilter
+  createFilterFunction
 };
 
