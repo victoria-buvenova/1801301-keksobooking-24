@@ -11,3 +11,4 @@ export const adForm = userForm;
 export const priceInputElement = userForm.querySelector('#price');
 export const addressInput = document.querySelector('#address');
 export const typeSelect = document.querySelector('#type');
+

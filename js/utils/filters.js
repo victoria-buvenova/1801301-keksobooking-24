@@ -1,7 +1,5 @@
+import { mapFiltersForm } from '../selectors.js';
 import { PriceRanges, MAX_MARKER_COUNT } from '../settings.js';
-
-const mapFiltersForm = document.querySelector('.map__filters');
-
 
 const EMPTY_VALUE = 'any';
 
@@ -80,13 +78,8 @@ const attachFiltersChangeHandler = (form, callback) => {
   form.addEventListener('change', callback);
 };
 
-const resetFilter = () => {
-  mapFiltersForm.reset();
-};
-
 export {
   createFilterFunction,
-  attachFiltersChangeHandler,
-  resetFilter
+  attachFiltersChangeHandler
 };
 
