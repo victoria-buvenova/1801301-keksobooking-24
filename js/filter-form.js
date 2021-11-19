@@ -38,7 +38,6 @@ export const initFilterForm = (buffer, putMarkers)=>{
   putMarkersRef = putMarkers;
   filterFuncRef = createFilterFunction(mapFiltersForm);
   mapFiltersForm.addEventListener('change',debounceSyncFilter);
-  mapFiltersForm.querySelector('.map__features',debounceSyncFilter);
 };
 
 export const degradeFilter = ()=>{

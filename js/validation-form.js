@@ -19,12 +19,10 @@ import { syncFilter } from './filter-form.js';
 
 const formResetBtn = userForm.querySelector('.ad-form__reset');
 
-const syncSelectValue = (primary, secondary)=>{
-  secondary.value = primary.value;
-};
+const syncSelectValue = (primary, secondary) => secondary.value = primary.value;
 
 const isCapacityValid = ()=>{
-  const enabled = [...capacitySelect.options].map((e)=>({disabled:e.disabled, value:e.value})).find((e)=>e.value === capacitySelect.value && e.disabled === false);
+  const enabled = [...capacitySelect.options].find((e)=>e.value === capacitySelect.value && e.disabled === false);
   return typeof enabled !== 'undefined';
 };
 
