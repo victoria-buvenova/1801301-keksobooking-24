@@ -73,12 +73,7 @@ const createFilterFunction = (form) => {
     filterGuestsInput.value);
 };
 
-const attachFiltersChangeHandler = (form, callback) => {
-  form.addEventListener('change', callback);
-};
-
 export {
-  createFilterFunction,
-  attachFiltersChangeHandler
+  createFilterFunction
 };
 
