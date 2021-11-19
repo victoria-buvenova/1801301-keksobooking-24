@@ -1028,3 +1028,9 @@ fieldset {
 .hidden {
   display: none;
 }
+
+.map-filter__no-data{
+  color: #FFaaaa;
+  background-color: #660000;
+  padding: 0.8em 3em;
+}

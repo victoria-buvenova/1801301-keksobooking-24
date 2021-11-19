@@ -1,9 +1,46 @@
-import './data.js';
-import './card.js';
-import './validation-form.js';
-import './map.js';
-import './fetch.js';
-import './utils/filters.js';
-import { disablePage } from './form-state.js';
+import {
+  initMap, putMarkers
+} from './map.js';
+import {
+  disablePage,
+  enableAdForm,
+  enableFilterForm,
+  handleMarkerMoved
+} from './form-state.js';
+import {
+  fetchAds
+} from './fetch.js';
+import {
+  initAdForm
+} from './validation-form.js';
+import {
+  degradeFilter,
+  initFilterForm,
+  syncFilter
+} from './filter-form.js';
 
+const buffer = {
+  data: null,
+};
 disablePage(document);
+
+const startApp = async () => {
+  try {
+    buffer.data = await fetchAds();
+    enableFilterForm();
+    syncFilter();
+  } catch (err) {
+    degradeFilter();
+  }
+};
+
+initFilterForm(buffer, putMarkers);
+initAdForm();
+
+initMap(
+  async () => {
+    enableAdForm();
+    await startApp();
+  },
+  handleMarkerMoved,
+);
